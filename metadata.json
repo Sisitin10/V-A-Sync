@@ -1,0 +1,6 @@
+{
+  "name": "Lossless Audio Video Combiner",
+  "description": "Combine audio and video with zero quality loss on video using direct stream copying. Supports audio trimming, fade in/out, volume mixing, and duration alignment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
