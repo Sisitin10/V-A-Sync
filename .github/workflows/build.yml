@@ -17,16 +17,17 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - name: Install Dependencies
-        run: bun install
+        run: |
+          bun install
+          bun add @capacitor/ios
 
       - name: Build Web App
         run: bun run build
 
-      - name: Fix Podfile Path
+      - name: Re-generate iOS Native Platform
         run: |
-          if ! grep -q "project 'App.xcodeproj'" ios/App/Podfile; then
-            sed -i '' "1s/^/project 'App.xcodeproj'\n/" ios/App/Podfile
-          fi
+          rm -rf ios
+          npx cap add ios
 
       - name: Sync Capacitor
         run: npx cap sync ios
