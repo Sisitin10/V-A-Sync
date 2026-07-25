@@ -1,22 +1,30 @@
 workflows:
-  ios-unsigned:
-    name: iOS Unsigned IPA Build
+  ios-capacitor-workflow:
+    name: iOS Capacitor Build
+    max_build_duration: 60
     instance_type: mac_mini_m2
+    environment:
+      node: latest
+      xcode: latest
+      cocoapods: default
     scripts:
-      - name: Build Unsigned App
+      - name: Install dependencies
+        script: | 
+          # Using bun since you have a bun.lock file
+          npm install -g bun
+          bun install
+      - name: Build Web Application
         script: |
-          # For Flutter apps:
-          flutter build ios --release --no-codesign
-          
-          # For React Native / Native iOS (Uncomment below if needed):
-          # xcodebuild -workspace ios/YourApp.xcworkspace -scheme YourApp -configuration Release CODE_SIGNING_ALLOWED=NO
-      - name: Package into IPA
+          bun run build
+      - name: Capacitor Sync iOS
         script: |
-          # Create the required Payload directory structure
-          mkdir -p Payload
-          # Copy the compiled .app bundle into Payload (adjust path if native iOS)
-          cp -r build/ios/iphoneos/Runner.app Payload/
-          # Zip it into an .ipa file
-          zip -r YourApp_Unsigned.ipa Payload
+          bunx cap sync ios
+      - name: CocoaPods Installation
+        script: |
+          cd ios/App && pod install
+      - name: Build iOS App (.app / .ipa)
+        script: |
+          cd ios/App
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -allowProvisioningUpdates CODE_SIGNING_ALLOWED=NO
     artifacts:
-      - "*.ipa"
+      - ios/App/build/Release-iphoneos/*.app
