@@ -15,13 +15,12 @@ workflows:
       - name: Build Web Application
         script: |
           bun run build
-      - name: Capacitor Copy Assets
+      - name: Capacitor Sync
         script: |
-          bunx cap copy ios
-      - name: Fix Podfile Path and Install
+          bunx cap sync ios
+      - name: Install CocoaPods
         script: |
           cd ios/App
-          echo "project 'App.xcodeproj'" | cat - Podfile > temp && mv temp Podfile
           pod install
       - name: Build Unsigned Native App
         script: |
@@ -30,6 +29,7 @@ workflows:
             -workspace App.xcworkspace \
             -scheme App \
             -configuration Release \
+            -sdk iphoneos \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
