@@ -15,17 +15,15 @@ workflows:
       - name: Build Web Application
         script: |
           bun run build
-      - name: Capacitor Sync (No Pods)
-        script: |
-          bunx cap sync ios --no-build
-      - name: Fix Podfile & Run Pod Install
+      - name: Fix Podfile Path
         script: |
           cd ios/App
-          # Ensure project path is explicitly defined in Podfile
           if ! grep -q "project 'App.xcodeproj'" Podfile; then
-            sed -i '' "1s/^/project 'App.xcodeproj'\n/" Podfile
+            echo "project 'App.xcodeproj'" | cat - Podfile > temp && mv temp Podfile
           fi
-          pod install
+      - name: Capacitor Sync
+        script: |
+          bunx cap sync ios
       - name: Build Unsigned Native App
         script: |
           cd ios/App
