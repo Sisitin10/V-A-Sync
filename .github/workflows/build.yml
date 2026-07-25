@@ -22,6 +22,12 @@ jobs:
       - name: Build Web App
         run: bun run build
 
+      - name: Fix Podfile Path
+        run: |
+          if ! grep -q "project 'App.xcodeproj'" ios/App/Podfile; then
+            sed -i '' "1s/^/project 'App.xcodeproj'\n/" ios/App/Podfile
+          fi
+
       - name: Sync Capacitor
         run: npx cap sync ios
 
