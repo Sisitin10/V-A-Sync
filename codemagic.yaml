@@ -17,7 +17,7 @@ workflows:
           bun run build
       - name: Capacitor Sync iOS
         script: |
-          bunx cap sync ios
+          bunx cap sync ios --no-pod-install
       - name: CocoaPods Installation
         script: |
           cd ios/App && pod install
