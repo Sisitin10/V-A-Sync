@@ -1,0 +1,19 @@
+{
+  "name": "Sisitin10 Repo",
+  "identifier": "com.sisitin10.vasync.repo",
+  "sourceURL": "https://github.io",
+  "apps": [
+    {
+      "name": "V-A-Sync",
+      "bundleIdentifier": "com.sisitin10.vasync",
+      "developerName": "Sisitin10",
+      "version": "1.0.0",
+      "versionDate": "2026-07-26",
+      "versionDescription": "Initial compiled iOS release.",
+      "downloadURL": "https://github.com/Sisitin10/V-A-Sync/releases/download/tag/free_unsigned_build.ipa",
+      "iconURL": "https://githubusercontent.com",
+      "size": 731136,
+      "localizedDescription": "Combine video and audio tracks seamlessly without quality loss."
+    }
+  ]
+}
